@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: agile-monkeys-shop
+  description: API to manage the agile monkeys shop products
+  version: 1.0.0
+  contact:
+    name: Brais González Úbeda
+    email: braisgu@gmail.com
+servers:
+- url: '{protocol}://{host}:{port}/{basePath}'
+  variables:
+    protocol:
+      default: http
+    host:
+      default: localhost
+    port:
+      default: '8080'
+    basePath:
+      default: agile-monkeys/v1
+tags:
+- name: Customer
+paths:
+  /customer/list:
+    get:
+      tags:
+      - Customer
+      operationId: findAll
+      summary: List all customers in the database
+      description: List all customers in the database
+      responses:
+        '200':
+          description: Customer list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /customer/fullInfo:
+    get:
+      tags:
+      - Customer
+      summary: Get full customer information
+      description: Get full customer information, including a photo URL
+      operationId: getFullInfo
+      parameters:
+      - in: header
+        name: customerId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Full info response of a customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /customer/create:
+    post:
+      tags:
+      - Customer
+      summary: Create a new customer
+      description: Create a new customer
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerRequest'
+      responses:
+        '200':
+          description: Successful response. Customer is created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /customer/delete/{customerId}:
+    delete:
+      tags:
+      - Customer
+      summary: Delete a customer
+      description: Delete a customer
+      operationId: delete
+      parameters:
+      - in: path
+        name: customerId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response. Customer is created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    BadRequest:
+      description: Request contains incorrect syntax or cannot be processed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotAllowed:
+      description: Operation not allowed for current user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    CustomerId:
+      in: header
+      name: customerId
+      required: true
+      schema:
+        type: string
+  schemas:
+    Customer:
+      type: object
+      required:
+      - id
+      - name
+      - surname
+      properties:
+        id:
+          description: Customer ID
+          type: string
+          example: "braisId1"
+        name:
+          description: Customer name
+          type: string
+          example: "Brais"
+        surname:
+          description: Customer surname
+          type: string
+          example: "González"
+        photo:
+          description: Customer photo
+          type: string
+        createdBy:
+          description: ID of the user who created the customer
+          type: string
+        updatedBy:
+          description: ID of the user who updated the customer
+          type: string
+    CustomerListResponse:
+      type: object
+      required:
+      - customerList
+      properties:
+        customerList:
+          description: List of all customers
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+    CreateCustomerRequest:
+      type: object
+      required:
+      - createCustomerRequest
+      properties:
+        createCustomerRequest:
+          description: Customer data
+          type: object
+          items:
+            $ref: '#/components/schemas/Customer'
+    CreateCustomerResponse:
+      type: object
+      required:
+      - itemId
+      - partNumber
+      - cart
+      properties:
+        id:
+          description: Customer ID
+          type: string
+          example: "braisId1"
+    ErrorResponse:
+      type: object
+      required:
+      - code
+      - title
+      - description
+      properties:
+        code:
+          description: The error status code
+          type: integer
+          format: int32
+        title:
+          description: A summarize sentence about the error
+          type: string
+        description:
+          description: Detailed information about the error
+          type: string
+        additionalData:
+          description: More data available to understand or track the error
+          type: object

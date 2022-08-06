@@ -15,6 +15,8 @@
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <openapi-generator.version>5.3.0</openapi-generator.version>
+    <jackson-databind.version>0.2.1</jackson-databind.version>
   </properties>
 
   <dependencies>
@@ -27,6 +29,63 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- openapi -->
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>openapi-generator</artifactId>
+      <version>${openapi-generator.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-simple</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <version>${jackson-databind.version}</version>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>${openapi-generator.version}</version>
+        <executions>
+          <execution>
+            <id>TheAgileMonkeys_Shop</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>
+                ${project.basedir}/src/main/resources/rest/openapi-rest.yml
+              </inputSpec>
+              <generatorName>spring</generatorName>
+              <apiPackage>com.agilemonkeys.shop.api</apiPackage>
+              <modelPackage>com.agilemonkeys.shop.model</modelPackage>
+              <configOptions>
+                <dateLibrary>java8</dateLibrary>
+                <java8>true</java8>
+                <interfaceOnly>true</interfaceOnly>
+                <ignoreAnyOfInEnum>true</ignoreAnyOfInEnum>
+                <serializableModel>true</serializableModel>
+                <generateSamples>false</generateSamples>
+                <unhandledException>false</unhandledException>
+              </configOptions>
+              <additionalProperties>
+                <additionalProperty>modelNameSuffix=DTO</additionalProperty>
+              </additionalProperties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
 
 </project>

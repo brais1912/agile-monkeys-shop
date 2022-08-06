@@ -60,4 +60,41 @@
     </dependencies>
   </dependencyManagement>
 
+  <build>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.1.2</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>8.45</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <configLocation>src/main/config/checkstyle-java-google-style.xml</configLocation>
+            <failOnViolation>true</failOnViolation>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <sourceDirectories>
+              <sourceDirectory>src/main/java</sourceDirectory>
+            </sourceDirectories>
+          </configuration>
+          <executions>
+            <execution>
+              <id>quality-metric-checkstyle</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
 </project>
