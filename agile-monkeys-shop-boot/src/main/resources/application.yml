@@ -1,19 +1,7 @@
 spring:
-  datasource:
-    url: jdbc:h2:file:~/agilemonkeysshop
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  h2:
-    console:
-      enabled: true
-  jpa:
-    generate-ddl: true
-    initialize: true
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: none
+  data:
+    mongodb:
+      uri: mongodb://api_user:NdEep0XLpMNKUmgQVa81oDCx7mrSRodh0Z79qdX3@localhost:27017/customer
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

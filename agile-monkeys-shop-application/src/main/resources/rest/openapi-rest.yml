@@ -79,9 +79,18 @@ paths:
       operationId: create
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CreateCustomerRequest'
+              type: object
+              properties:
+                name:
+                  type: string
+                surname:
+                  type: string
+                photo:
+                  description: Customer photo
+                  type: string
+                  format: binary
       responses:
         '200':
           description: Successful response. Customer is created successfully
@@ -169,7 +178,6 @@ components:
         id:
           description: Customer ID
           type: string
-          example: "braisId1"
         name:
           description: Customer name
           type: string
@@ -195,16 +203,6 @@ components:
         customerList:
           description: List of all customers
           type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-    CreateCustomerRequest:
-      type: object
-      required:
-      - createCustomerRequest
-      properties:
-        createCustomerRequest:
-          description: Customer data
-          type: object
           items:
             $ref: '#/components/schemas/Customer'
     CreateCustomerResponse:
