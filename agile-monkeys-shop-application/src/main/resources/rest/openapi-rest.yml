@@ -42,7 +42,7 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
-  /customer/fullInfo:
+  /customer/fullInfo/{customerId}:
     get:
       tags:
       - Customer
@@ -50,7 +50,7 @@ paths:
       description: Get full customer information, including a photo URL
       operationId: getFullInfo
       parameters:
-      - in: header
+      - in: path
         name: customerId
         required: true
         schema:
@@ -81,16 +81,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                surname:
-                  type: string
-                photo:
-                  description: Customer photo
-                  type: string
-                  format: binary
+              $ref: '#/components/schemas/CreateCustomerRequest'
       responses:
         '200':
           description: Successful response. Customer is created successfully
@@ -98,6 +89,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateCustomerResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /customer/update/{customerId}:
+    put:
+      tags:
+      - Customer
+      summary: Update a customer
+      description: Update customer
+      operationId: update
+      parameters:
+      - in: path
+        name: customerId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerRequest'
+      responses:
+        '200':
+          description: Successful response. Customer is updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomerResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -121,11 +145,11 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful response. Customer is created successfully
+          description: Successful response. Customer is deleted successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateCustomerResponse'
+                $ref: '#/components/schemas/DeleteCustomerResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -204,13 +228,51 @@ components:
           description: List of all customers
           type: array
           items:
-            $ref: '#/components/schemas/Customer'
-    CreateCustomerResponse:
+            $ref: '#/components/schemas/LiteCustomer'
+    LiteCustomer:
       type: object
       required:
-      - itemId
-      - partNumber
-      - cart
+      - id
+      - name
+      - surname
+      properties:
+        id:
+          description: Customer ID
+          type: string
+        name:
+          description: Customer name
+          type: string
+          example: "Brais"
+        surname:
+          description: Customer surname
+          type: string
+          example: "González"
+    CreateCustomerRequest:
+      type: object
+      required:
+      - id
+      - name
+      - surname
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        photo:
+          description: Customer photo
+          type: string
+          format: binary
+    CreateCustomerResponse:
+      type: object
+      properties:
+        id:
+          description: Customer ID
+          type: string
+          example: "braisId1"
+    DeleteCustomerResponse:
+      type: object
       properties:
         id:
           description: Customer ID
@@ -236,3 +298,20 @@ components:
         additionalData:
           description: More data available to understand or track the error
           type: object
+    UpdateCustomerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        photo:
+          description: Customer photo
+          type: string
+          format: binary
+    UpdateCustomerResponse:
+      type: object
+      properties:
+        id:
+          description: Customer ID
+          type: string
