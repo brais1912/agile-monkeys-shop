@@ -9,3 +9,4 @@ db.createUser(
   },
 );
 db.createCollection('customer');
+db.createCollection('user');

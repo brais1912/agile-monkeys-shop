@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: agile-monkeys-shop
+  title: Agile monkeys shop
   description: API to manage the agile monkeys shop products
   version: 1.0.0
   contact:
@@ -19,6 +19,7 @@ servers:
       default: agile-monkeys/v1
 tags:
 - name: Customer
+- name: User
 paths:
   /customer/list:
     get:
@@ -150,6 +151,116 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteCustomerResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /user/list:
+    get:
+      tags:
+      - User
+      operationId: findAllUsers
+      summary: List all users in the database
+      description: List all users in the database
+      responses:
+        '200':
+          description: User list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /user/create:
+    post:
+      tags:
+      - User
+      summary: Create a new user
+      description: Create a new user
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: Successful response. User is created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /user/update/{userId}:
+    put:
+      tags:
+      - User
+      summary: Update a user
+      description: Update user
+      operationId: updateUser
+      parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Successful response. User is updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/NotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /user/delete/{userId}:
+    delete:
+      tags:
+      - User
+      summary: Delete a user
+      description: Delete a user
+      operationId: deleteUser
+      parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response. User is deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -315,3 +426,105 @@ components:
         id:
           description: Customer ID
           type: string
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - surname
+      - username
+      - password
+      properties:
+        id:
+          description: User ID
+          type: string
+        username:
+          type: string
+          example: "brais123"
+        password:
+          type: string
+          example: "password"
+        name:
+          type: string
+          example: "Brais"
+        surname:
+          type: string
+          example: "González"
+        age:
+          type: integer
+          format: int32
+        userType:
+          type: string
+          enum: [admin, user]
+        userStatus:
+          type: string
+          enum: [active, inactive, suspended]
+    UserListResponse:
+      type: object
+      properties:
+        userList:
+          description: List of all users
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    CreateUserRequest:
+      type: object
+      required:
+      - id
+      - username
+      - password
+      - name
+      - surname
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        age:
+          type: integer
+          format: int32
+    CreateUserResponse:
+      type: object
+      properties:
+        id:
+          description: User ID
+          type: string
+          example: "braisId1"
+    UpdateUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        age:
+          type: string
+        userType:
+          type: string
+          enum: [admin, user]
+        userStatus:
+          type: string
+          enum: [active, inactive, suspended]
+    UpdateUserResponse:
+      type: object
+      properties:
+        id:
+          description: User ID
+          type: string
+    DeleteUserResponse:
+      type: object
+      properties:
+        id:
+          description: User ID
+          type: string
+          example: "braisId1"

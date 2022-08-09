@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://api_user:NdEep0XLpMNKUmgQVa81oDCx7mrSRodh0Z79qdX3@localhost:27017/customer
+      uri: mongodb://api_user:NdEep0XLpMNKUmgQVa81oDCx7mrSRodh0Z79qdX3@localhost:27017/agile-monkeys-shop
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
