@@ -8,4 +8,4 @@ spring:
 agile:
   monkeys:
     customer:
-      photo-url: .//photo//
+      photo-url: .\\photo\\

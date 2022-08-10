@@ -2,8 +2,6 @@ package com.brais.agilemonkeysshop.user.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.brais.agilemonkeysshop.user.UserStatusEnum;
-import com.brais.agilemonkeysshop.user.UserTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

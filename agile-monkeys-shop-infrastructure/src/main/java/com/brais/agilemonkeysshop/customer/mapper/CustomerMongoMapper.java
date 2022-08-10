@@ -15,9 +15,9 @@ public interface CustomerMongoMapper {
 
   LiteCustomer toLiteCustomer(Customer customer);
 
-  @Mapping(source = "photo", target = "photoUrl")
+  @Mapping(target = "photoUrl", source = "photo")
   FullCustomer toFullCustomer(Customer customer);
 
-  @Mapping(source = "photoUrl", target = "photo")
+  @Mapping(target = "photo", source = "photoUrl")
   Customer toCustomer(FullCustomer fullCustomer);
 }

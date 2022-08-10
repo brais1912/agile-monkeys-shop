@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 public enum UserStatusEnum {
   ACTIVE("active"),
   INACTIVE("inactive"),
-  SUSPENDED("suspended");
+  SUSPENDED("suspended"),
+  UNKNOWN("unknown");
 
   private final String value;
 

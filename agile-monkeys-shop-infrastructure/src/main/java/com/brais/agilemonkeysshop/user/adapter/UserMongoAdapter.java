@@ -1,6 +1,7 @@
 package com.brais.agilemonkeysshop.user.adapter;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,5 +23,34 @@ public class UserMongoAdapter implements UserPersistencePort {
   public List<FullUser> findAll() {
     List<User> userList = userRepository.findAll();
     return userMongoMapper.toFullUserList(userList);
+  }
+
+  @Override
+  public Optional<FullUser> findById(String userId) {
+    return userRepository.findById(userId)
+        .map(retrievedUser -> userMongoMapper.toFullUser(retrievedUser));
+  }
+
+  @Override
+  public FullUser create(FullUser fullUser) {
+    User user = userMongoMapper.toUser(fullUser);
+
+    return userMongoMapper.toFullUser(userRepository.insert(user));
+  }
+
+  @Override
+  public Optional<FullUser> update(FullUser fullUser) {
+    return userRepository.findById(fullUser.id())
+        .map(user -> updateExistingUser(userMongoMapper.toUser(fullUser)))
+        .map(user -> fullUser);
+  }
+
+  private User updateExistingUser(User existingUser) {
+    return userRepository.save(existingUser);
+  }
+
+  @Override
+  public void delete(String userId) {
+    userRepository.deleteById(userId);
   }
 }

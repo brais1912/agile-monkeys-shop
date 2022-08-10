@@ -16,4 +16,20 @@ public class UserServiceImpl implements UserServicePort {
   public List<FullUser> findAll() {
     return userPersistencePort.findAll();
   }
+
+  @Override
+  public FullUser create(FullUser fullUser) {
+    return userPersistencePort.create(fullUser);
+  }
+
+  @Override
+  public FullUser update(FullUser fullUser) {
+    return userPersistencePort.update(fullUser).orElseThrow();
+  }
+
+  @Override
+  public void delete(String userId) {
+    userPersistencePort.findById(userId).orElseThrow();
+    userPersistencePort.delete(userId);
+  }
 }

@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum UserTypeEnum {
   ADMIN("admin"),
-  USER("user");
+  USER("user"),
+  UNDEFINED("undefined");
 
   private final String value;
 

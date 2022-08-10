@@ -1,6 +1,7 @@
 package com.brais.agilemonkeysshop.user.mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.brais.agilemonkeysshop.FullUser;
 import com.brais.agilemonkeysshop.user.UserStatusEnum;
@@ -14,12 +15,14 @@ public interface UserMongoMapper {
   List<FullUser> toFullUserList(List<User> userList);
 
   default UserStatusEnum toUserStatusEnum(String userStatus) {
-    return UserStatusEnum.valueOf(userStatus.toUpperCase());
+    return Optional.ofNullable(userStatus).map(UserStatusEnum::valueOf).orElse(UserStatusEnum.UNKNOWN);
   }
 
   default UserTypeEnum toUserTypeEnum(String userType) {
-    return UserTypeEnum.valueOf(userType.toUpperCase());
+    return Optional.ofNullable(userType).map(UserTypeEnum::valueOf).orElse(UserTypeEnum.UNDEFINED);
   }
 
   FullUser toFullUser(User user);
+
+  User toUser(FullUser fullUser);
 }

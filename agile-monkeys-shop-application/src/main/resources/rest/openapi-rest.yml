@@ -189,6 +189,7 @@ paths:
       description: Create a new user
       operationId: createUser
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -223,7 +224,7 @@ paths:
           type: string
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               $ref: '#/components/schemas/UpdateUserRequest'
       responses:
@@ -454,11 +455,9 @@ components:
           type: integer
           format: int32
         userType:
-          type: string
-          enum: [admin, user]
+          $ref: '#/components/schemas/UserType'
         userStatus:
-          type: string
-          enum: [active, inactive, suspended]
+          $ref: '#/components/schemas/UserStatus'
     UserListResponse:
       type: object
       properties:
@@ -489,6 +488,10 @@ components:
         age:
           type: integer
           format: int32
+        userType:
+          $ref: '#/components/schemas/UserType'
+        userStatus:
+          $ref: '#/components/schemas/UserStatus'
     CreateUserResponse:
       type: object
       properties:
@@ -510,11 +513,9 @@ components:
         age:
           type: string
         userType:
-          type: string
-          enum: [admin, user]
+          $ref: '#/components/schemas/UserType'
         userStatus:
-          type: string
-          enum: [active, inactive, suspended]
+          $ref: '#/components/schemas/UserStatus'
     UpdateUserResponse:
       type: object
       properties:
@@ -528,3 +529,16 @@ components:
           description: User ID
           type: string
           example: "braisId1"
+    UserType:
+      type: string
+      enum:
+      - admin
+      - user
+      - undefined
+    UserStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      - suspended
+      - unknown

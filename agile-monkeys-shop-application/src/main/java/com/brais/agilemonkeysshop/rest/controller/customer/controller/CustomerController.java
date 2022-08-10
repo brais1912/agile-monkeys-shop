@@ -1,7 +1,6 @@
 package com.brais.agilemonkeysshop.rest.controller.customer.controller;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +16,19 @@ import com.agilemonkeys.shop.model.DeleteCustomerResponseDTO;
 import com.agilemonkeys.shop.model.UpdateCustomerResponseDTO;
 import com.brais.agilemonkeysshop.customer.FullCustomer;
 import com.brais.agilemonkeysshop.customer.LiteCustomer;
-import com.brais.agilemonkeysshop.customer.config.CustomerPhotoConfig;
 import com.brais.agilemonkeysshop.customer.port.CustomerServicePort;
+import com.brais.agilemonkeysshop.rest.controller.AbstractController;
 import com.brais.agilemonkeysshop.rest.controller.customer.mapper.CustomerApiMapper;
 
 @RestController
 @RequestMapping("${openapi.agilemonkeysshop.base-path:/agile-monkeys/v1}")
-public class CustomerController implements CustomerApi {
+public class CustomerController extends AbstractController implements CustomerApi {
 
   @Autowired
   private CustomerServicePort customerServicePort;
 
   @Autowired
   private CustomerApiMapper customerApiMapper;
-
-  @Autowired
-  private CustomerPhotoConfig customerPhotoConfig;
 
   @Override
   public ResponseEntity<CustomerListResponseDTO> findAll() {
@@ -65,12 +61,6 @@ public class CustomerController implements CustomerApi {
     FullCustomer fullCustomerUpdated = customerServicePort.update(fullCustomer);
 
     return ResponseEntity.ok(new UpdateCustomerResponseDTO().id(fullCustomerUpdated.id()));
-  }
-
-  private String getPhotoUrlIfPhotoExists(MultipartFile photo) {
-    return photo != null && !Objects.requireNonNull(photo.getOriginalFilename()).isEmpty()
-        ? customerPhotoConfig.getPhotoUrl()
-        : null;
   }
 
   @Override
