@@ -71,7 +71,19 @@ public class CustomerServiceImpl implements CustomerServicePort {
 
   @Override
   public void delete(String customerId) {
-    findById(customerId);
+    FullCustomer fullCustomerToDelete = findById(customerId);
     customerPersistencePort.delete(customerId);
+
+    try {
+      deleteCustomerPhoto(fullCustomerToDelete.photoUrl());
+    } catch (IOException e) {
+      log.error(LOGGER_PREFIX + "Error when deleting the customer's photo. The client's photo could not be deleted: {}",
+          e.getMessage(), e);
+    }
+  }
+
+  private void deleteCustomerPhoto(String photoUrl) throws IOException {
+    Path pathPhotoUrl = Paths.get(photoUrl);
+    Files.delete(pathPhotoUrl);
   }
 }
