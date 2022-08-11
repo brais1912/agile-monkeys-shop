@@ -8,4 +8,7 @@ spring:
 agile:
   monkeys:
     customer:
-      photo-url: .\\photo\\
+      photo-url: .\photo\
+    security:
+      jwt-secret-key: QWdpbGUgbW9ua2V5cyBzaG9wIHNlY3JldCBrZXk=
+      jwt-token-validity: 720000

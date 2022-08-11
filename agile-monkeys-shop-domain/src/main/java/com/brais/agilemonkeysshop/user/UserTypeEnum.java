@@ -13,4 +13,13 @@ public enum UserTypeEnum {
   public String getValue() {
     return value;
   }
+
+  public static UserTypeEnum fromValue(String value) {
+    for (UserTypeEnum b : UserTypeEnum.values()) {
+      if (b.value.equals(value)) {
+        return b;
+      }
+    }
+    return UNDEFINED;
+  }
 }

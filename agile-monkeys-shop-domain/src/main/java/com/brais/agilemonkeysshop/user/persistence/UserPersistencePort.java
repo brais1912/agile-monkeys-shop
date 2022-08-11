@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import com.brais.agilemonkeysshop.FullUser;
+import com.brais.agilemonkeysshop.LiteUser;
 
 public interface UserPersistencePort {
 
   List<FullUser> findAll();
 
-  Optional<FullUser> findById(String userId);
+  Optional<LiteUser> findById(String userId);
+
+  Optional<LiteUser> findByUsername(String username);
 
   FullUser create(FullUser fullUser);
 

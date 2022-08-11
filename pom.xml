@@ -77,6 +77,13 @@
     </dependencies>
   </dependencyManagement>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <pluginManagement>

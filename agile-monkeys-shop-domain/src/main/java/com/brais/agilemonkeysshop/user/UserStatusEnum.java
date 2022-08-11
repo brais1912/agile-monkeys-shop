@@ -14,4 +14,13 @@ public enum UserStatusEnum {
   public String getValue() {
     return value;
   }
+
+  public static UserStatusEnum fromValue(String value) {
+    for (UserStatusEnum b : UserStatusEnum.values()) {
+      if (b.value.equals(value)) {
+        return b;
+      }
+    }
+    return UNKNOWN;
+  }
 }

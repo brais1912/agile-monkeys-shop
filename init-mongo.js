@@ -10,3 +10,15 @@ db.createUser(
 );
 db.createCollection('customer');
 db.createCollection('user');
+
+db.user.insertOne(
+  {
+    _id: "1",
+    username: 'admin',
+    password: '$2a$10$8R82VQODT8PF6YNPqaJ6veJ7hw.MvH/rZFX0TKoyaK874wsvGNi3y', // agilemonkeysadmin,
+    name: 'Admin',
+    surname: 'Agile monkeys',
+    userType: 'admin',
+    userStatus: 'active'
+  }
+);
