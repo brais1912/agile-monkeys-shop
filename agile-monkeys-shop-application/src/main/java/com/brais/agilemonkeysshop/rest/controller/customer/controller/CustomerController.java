@@ -48,7 +48,9 @@ public class CustomerController extends AbstractController implements CustomerAp
 
   @Override
   public ResponseEntity<CreateCustomerResponseDTO> create(String id, String name, String surname, MultipartFile photo) {
-    FullCustomer fullCustomer = customerApiMapper.toFullCustomer(id, name, surname, photo, getPhotoUrlIfPhotoExists(photo));
+    String createdBy = getLoggedUserId();
+    FullCustomer fullCustomer =
+        customerApiMapper.toFullCustomer(id, name, surname, photo, getPhotoUrlIfPhotoExists(photo), createdBy, createdBy);
     FullCustomer fullCustomerCreated = customerServicePort.create(fullCustomer);
 
     return ResponseEntity.ok(new CreateCustomerResponseDTO().id(fullCustomerCreated.id()));
@@ -56,8 +58,10 @@ public class CustomerController extends AbstractController implements CustomerAp
 
   @Override
   public ResponseEntity<UpdateCustomerResponseDTO> update(String customerId, String name, String surname, MultipartFile photo) {
+    String updatedBy = getLoggedUserId();
     // TODO exception if photo is not MultipartFile (i.e.: photo instanceof Multipartfile)
-    FullCustomer fullCustomer = customerApiMapper.toFullCustomer(customerId, name, surname, photo, getPhotoUrlIfPhotoExists(photo));
+    FullCustomer fullCustomer =
+        customerApiMapper.toFullCustomer(customerId, name, surname, photo, getPhotoUrlIfPhotoExists(photo), updatedBy);
     FullCustomer fullCustomerUpdated = customerServicePort.update(fullCustomer);
 
     return ResponseEntity.ok(new UpdateCustomerResponseDTO().id(fullCustomerUpdated.id()));

@@ -6,8 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,14 +20,12 @@ import com.brais.agilemonkeysshop.FullUser;
 import com.brais.agilemonkeysshop.rest.controller.AbstractController;
 import com.brais.agilemonkeysshop.rest.controller.user.mapper.UserApiMapper;
 import com.brais.agilemonkeysshop.user.port.UserServicePort;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("${openapi.agilemonkeysshop.base-path:/agile-monkeys/v1}")
 public class UserController extends AbstractController implements UserApi {
-
-  private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
   @Autowired
   private UserServicePort userServicePort;
@@ -59,11 +55,6 @@ public class UserController extends AbstractController implements UserApi {
 
   @Override
   public ResponseEntity<UserListResponseDTO> findAllUsers() {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    logger.info("Datos usuario: {}", auth.getPrincipal());
-    logger.info("Datos de permisos: {}", auth.getAuthorities());
-    logger.info("Está autenticado: {}", auth.isAuthenticated());
-
     List<FullUser> fullUserList = userServicePort.findAll();
 
     UserListResponseDTO userListResponseDTO = userApiMapper.toUserListResponseDTO(fullUserList);

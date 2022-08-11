@@ -20,4 +20,7 @@ public interface CustomerMongoMapper {
 
   @Mapping(target = "photo", source = "photoUrl")
   Customer toCustomer(FullCustomer fullCustomer);
+
+  @Mapping(target = "createdBy", source = "existingCreatedBy")
+  Customer toCustomerUpdated(FullCustomer fullCustomer, String existingCreatedBy);
 }

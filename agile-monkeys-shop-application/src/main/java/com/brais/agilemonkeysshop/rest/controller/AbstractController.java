@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.brais.agilemonkeysshop.customer.config.CustomerPhotoConfig;
@@ -29,6 +31,11 @@ public abstract class AbstractController {
     if (field == null || field.isEmpty()) {
       throw new ValidationException("One of the required fields is missing.");
     }
+  }
+
+  protected String getLoggedUserId() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    return auth.getName();
   }
 
 }

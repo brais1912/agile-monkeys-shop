@@ -9,6 +9,6 @@ import com.brais.agilemonkeysshop.user.entity.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-  Optional<List<User>> findByUsername(String username);
+  Optional<User> findByUsername(String username);
 
 }

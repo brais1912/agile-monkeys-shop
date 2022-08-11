@@ -11,6 +11,8 @@ import com.brais.agilemonkeysshop.user.entity.User;
 import com.brais.agilemonkeysshop.user.mapper.UserMongoMapper;
 import com.brais.agilemonkeysshop.user.persistence.UserPersistencePort;
 import com.brais.agilemonkeysshop.user.repository.UserRepository;
+import com.brais.agilemonkeysshop.user.service.exception.UserAdapterException.ExistingUserWithSameIdException;
+import com.brais.agilemonkeysshop.user.service.exception.UserAdapterException.ExistingUserWithSameUsernameException;
 
 public class UserMongoAdapter implements UserPersistencePort {
 
@@ -35,13 +37,15 @@ public class UserMongoAdapter implements UserPersistencePort {
   @Override
   public Optional<LiteUser> findByUsername(String username) {
     return userRepository.findByUsername(username)
-        .map(retrievedUser -> userMongoMapper.toLiteUser(retrievedUser.get(0)));
+        .map(retrievedUser -> userMongoMapper.toLiteUser(retrievedUser));
   }
 
   @Override
   public FullUser create(FullUser fullUser) {
-    if (userNameExists(fullUser.username())) {
-      throw new UnsupportedOperationException("Username " + fullUser.username() + " already exists");
+    if (userRepository.findById(fullUser.id()).isPresent()) {
+      throw new ExistingUserWithSameIdException("Existing user with same ID: " + fullUser.id());
+    } else if (userNameExists(fullUser.username())) {
+      throw new ExistingUserWithSameUsernameException("Username " + fullUser.username() + " already exists");
     }
     User user = userMongoMapper.toUser(fullUser);
 
@@ -61,7 +65,7 @@ public class UserMongoAdapter implements UserPersistencePort {
 
   private User updateExistingUser(User existingUser, User userToUpdate) {
     if (!existingUser.getUsername().equals(userToUpdate.getUsername()) && userNameExists(userToUpdate.getUsername())) {
-      throw new UnsupportedOperationException("Username " + userToUpdate.getUsername() + " already exists");
+      throw new ExistingUserWithSameUsernameException("Username " + userToUpdate.getUsername() + " already exists");
     }
     return userRepository.save(userToUpdate);
   }

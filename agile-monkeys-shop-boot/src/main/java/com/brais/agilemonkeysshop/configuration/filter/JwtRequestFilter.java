@@ -14,8 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import com.brais.agilemonkeysshop.security.service.JwtUtilService;
+import io.jsonwebtoken.ExpiredJwtException;
 
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -24,6 +26,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   @Autowired
   private JwtUtilService jwtUtilService;
+
+  @Autowired
+  private HandlerExceptionResolver handlerExceptionResolver;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -36,7 +41,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
       jwt = authorizationHeader.substring(7);
-      username = jwtUtilService.extractUsername(jwt);
+      try {
+        username = jwtUtilService.extractUsername(jwt);
+      } catch (ExpiredJwtException e) {
+        handlerExceptionResolver.resolveException(request, response, null, e);
+      }
     }
 
 

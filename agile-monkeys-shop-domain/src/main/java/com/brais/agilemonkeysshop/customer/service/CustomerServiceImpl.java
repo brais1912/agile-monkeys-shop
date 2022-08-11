@@ -11,11 +11,16 @@ import com.brais.agilemonkeysshop.customer.FullCustomer;
 import com.brais.agilemonkeysshop.customer.LiteCustomer;
 import com.brais.agilemonkeysshop.customer.persistence.CustomerPersistencePort;
 import com.brais.agilemonkeysshop.customer.port.CustomerServicePort;
+import com.brais.agilemonkeysshop.customer.service.exception.CustomerServiceException.CustomerNotFoundServiceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 
 @RequiredArgsConstructor
+@Slf4j
 public class CustomerServiceImpl implements CustomerServicePort {
+
+  private static final String LOGGER_PREFIX = "[CUSTOMER SERVICE] ";
 
   private final CustomerPersistencePort customerPersistencePort;
 
@@ -26,7 +31,8 @@ public class CustomerServiceImpl implements CustomerServicePort {
 
   @Override
   public FullCustomer findById(String customerId) {
-    return customerPersistencePort.findById(customerId).orElseThrow();
+    return customerPersistencePort.findById(customerId)
+        .orElseThrow(() -> new CustomerNotFoundServiceException("Customer " + customerId + " not found"));
   }
 
   @Override
@@ -37,7 +43,8 @@ public class CustomerServiceImpl implements CustomerServicePort {
         try {
           uploadCustomerPhoto(fullCustomer);
         } catch (IOException e) {
-          e.printStackTrace();
+          log.error(LOGGER_PREFIX + "Error when uploading the customer's photo. The client's photo could not be uploaded: {}",
+              e.getMessage(), e);
         }
       }
     }
@@ -58,12 +65,13 @@ public class CustomerServiceImpl implements CustomerServicePort {
 
   @Override
   public FullCustomer update(FullCustomer fullCustomer) {
-    return customerPersistencePort.update(fullCustomer).orElseThrow();
+    return customerPersistencePort.update(fullCustomer)
+        .orElseThrow(() -> new CustomerNotFoundServiceException("Customer " + fullCustomer.id() + " not found"));
   }
 
   @Override
   public void delete(String customerId) {
-    customerPersistencePort.findById(customerId).orElseThrow();
+    findById(customerId);
     customerPersistencePort.delete(customerId);
   }
 }

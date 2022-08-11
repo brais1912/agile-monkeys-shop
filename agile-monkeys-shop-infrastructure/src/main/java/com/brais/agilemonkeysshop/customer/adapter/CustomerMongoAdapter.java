@@ -12,6 +12,7 @@ import com.brais.agilemonkeysshop.customer.entity.Customer;
 import com.brais.agilemonkeysshop.customer.mapper.CustomerMongoMapper;
 import com.brais.agilemonkeysshop.customer.persistence.CustomerPersistencePort;
 import com.brais.agilemonkeysshop.customer.repository.CustomerRepository;
+import com.brais.agilemonkeysshop.customer.service.exception.CustomerAdapterException.ExistingCustomerWithSameIdException;
 
 @Service
 public class CustomerMongoAdapter implements CustomerPersistencePort {
@@ -37,7 +38,9 @@ public class CustomerMongoAdapter implements CustomerPersistencePort {
 
   @Override
   public FullCustomer create(FullCustomer fullCustomer) {
-    // TODO set createdBy
+    if (customerRepository.findById(fullCustomer.id()).isPresent()) {
+      throw new ExistingCustomerWithSameIdException("Existing customer with same ID: " + fullCustomer.id());
+    }
     Customer customer = customerMongoMapper.toCustomer(fullCustomer);
 
     return customerMongoMapper.toFullCustomer(customerRepository.insert(customer));
@@ -45,9 +48,8 @@ public class CustomerMongoAdapter implements CustomerPersistencePort {
 
   @Override
   public Optional<FullCustomer> update(FullCustomer fullCustomer) {
-    // TODO set updatedBy
     return customerRepository.findById(fullCustomer.id())
-        .map(customer -> updateExistingCustomer(customerMongoMapper.toCustomer(fullCustomer)))
+        .map(customer -> updateExistingCustomer(customerMongoMapper.toCustomerUpdated(fullCustomer, customer.getCreatedBy())))
         .map(customer -> fullCustomer);
   }
 

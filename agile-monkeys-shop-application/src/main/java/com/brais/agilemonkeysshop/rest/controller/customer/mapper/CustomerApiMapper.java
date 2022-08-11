@@ -30,11 +30,22 @@ public interface CustomerApiMapper {
 
   LiteCustomerDTO toLiteCustomerDTO(LiteCustomer fullCustomer);
 
-  default FullCustomer toFullCustomer(String id, String name, String surname, MultipartFile photo, String photoUrl) {
+  default FullCustomer toFullCustomer(String id, String name, String surname, MultipartFile photo, String photoUrl, String createdBy,
+      String updatedBy) {
     String completePhotoUrl = (photoUrl != null && !photoUrl.isEmpty())
         ? buildPhotoUrl(photoUrl, id, photo.getOriginalFilename())
         : null;
-    return new FullCustomer(id, name, surname, photo, completePhotoUrl, null, null);
+    return new FullCustomer(id, name, surname, photo, completePhotoUrl, createdBy, updatedBy);
+  }
+
+  default FullCustomer toFullCustomer(String id, String name, String surname, MultipartFile photo, String photoUrl, String updatedBy) {
+    return new FullCustomer(id, name, surname, photo, getCompletePhotoUrl(id, photo, photoUrl), null, updatedBy);
+  }
+
+  private String getCompletePhotoUrl(String id, MultipartFile photo, String photoUrl) {
+    return photoUrl != null && !photoUrl.isEmpty()
+        ? buildPhotoUrl(photoUrl, id, photo.getOriginalFilename())
+        : null;
   }
 
   default String buildPhotoUrl(String photoUrl, String id, String originalFileName) {

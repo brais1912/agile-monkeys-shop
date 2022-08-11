@@ -399,8 +399,7 @@ components:
       properties:
         code:
           description: The error status code
-          type: integer
-          format: int32
+          type: string
         title:
           description: A summarize sentence about the error
           type: string
