@@ -43,6 +43,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /customer/fullInfo/{customerId}:
     get:
       tags:
@@ -71,6 +73,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /customer/create:
     post:
       tags:
@@ -98,6 +102,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /customer/update/{customerId}:
     put:
       tags:
@@ -131,6 +137,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /customer/delete/{customerId}:
     delete:
       tags:
@@ -159,6 +167,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /user/list:
     get:
       tags:
@@ -181,6 +191,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /user/create:
     post:
       tags:
@@ -209,6 +221,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /user/update/{userId}:
     put:
       tags:
@@ -242,6 +256,8 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
   /user/delete/{userId}:
     delete:
       tags:
@@ -270,7 +286,14 @@ paths:
           $ref: '#/components/responses/NotAllowed'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - bearerAuth: []
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   responses:
     BadRequest:
       description: Request contains incorrect syntax or cannot be processed

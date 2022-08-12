@@ -10,7 +10,8 @@ public class UserServiceException extends RuntimeException {
 
   @RequiredArgsConstructor
   public enum Reason {
-    USER_NOT_FOUND_EXCEPTION(1, "User not found exception");
+    USER_NOT_FOUND_EXCEPTION(1, "User not found exception"),
+    USER_NOT_ACTIVE_STATUS_EXCEPTION(2, "The user is not in active status");
 
     private final int id;
 
@@ -34,6 +35,15 @@ public class UserServiceException extends RuntimeException {
 
     public UserNotFoundServiceException(String errorMessage) {
       super(Reason.USER_NOT_FOUND_EXCEPTION, TITLE_EXCEPTION + " - " + Reason.USER_NOT_FOUND_EXCEPTION.errorMessage, errorMessage);
+    }
+  }
+
+  public static final class UserNotActiveStatusException extends UserServiceException {
+
+    public UserNotActiveStatusException(String errorMessage) {
+      super(Reason.USER_NOT_ACTIVE_STATUS_EXCEPTION,
+          TITLE_EXCEPTION + " - " + Reason.USER_NOT_ACTIVE_STATUS_EXCEPTION.errorMessage,
+          errorMessage);
     }
   }
 

@@ -15,6 +15,8 @@ import com.brais.agilemonkeysshop.rest.controller.advice.mapper.ErrorResponseMap
 import com.brais.agilemonkeysshop.user.service.exception.UserAdapterException;
 import com.brais.agilemonkeysshop.user.service.exception.UserAdapterException.ExistingUserWithSameIdException;
 import com.brais.agilemonkeysshop.user.service.exception.UserAdapterException.ExistingUserWithSameUsernameException;
+import com.brais.agilemonkeysshop.user.service.exception.UserServiceException.UserNotActiveStatusException;
+import com.brais.agilemonkeysshop.user.service.exception.UserServiceException.UserNotFoundServiceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +36,11 @@ public class BaseAdvice extends ResponseEntityExceptionHandler {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildErrorResponse(e.getCode(), e.getTitle(), e.getErrorMessage()));
   }
 
+  @ExceptionHandler({UserNotFoundServiceException.class})
+  protected ResponseEntity<ErrorResponseDTO> handleCustomerServiceException(UserNotFoundServiceException e) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildErrorResponse(e.getCode(), e.getTitle(), e.getErrorMessage()));
+  }
+
   @ExceptionHandler({ExistingUserWithSameUsernameException.class, ExistingUserWithSameIdException.class})
   protected ResponseEntity<ErrorResponseDTO> handleUserAdapterException(UserAdapterException e) {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(buildErrorResponse(e.getCode(), e.getTitle(), e.getErrorMessage()));
@@ -42,6 +49,11 @@ public class BaseAdvice extends ResponseEntityExceptionHandler {
   @ExceptionHandler({ExistingCustomerWithSameIdException.class})
   protected ResponseEntity<ErrorResponseDTO> handleCustomerAdapterException(CustomerAdapterException e) {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(buildErrorResponse(e.getCode(), e.getTitle(), e.getErrorMessage()));
+  }
+
+  @ExceptionHandler({UserNotActiveStatusException.class})
+  protected ResponseEntity<ErrorResponseDTO> handleUserNotActiveStatusException(UserNotActiveStatusException e) {
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(buildErrorResponse(e.getCode(), e.getTitle(), e.getErrorMessage()));
   }
 
   private ErrorResponseDTO buildErrorResponse(String code, String className, String message) {

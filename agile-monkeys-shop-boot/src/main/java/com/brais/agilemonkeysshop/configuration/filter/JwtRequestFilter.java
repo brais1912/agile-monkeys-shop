@@ -35,6 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
 
     final String authorizationHeader = request.getHeader("Authorization");
+    boolean expiredJwtToken = false;
 
     String username = null;
     String jwt = null;
@@ -44,10 +45,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       try {
         username = jwtUtilService.extractUsername(jwt);
       } catch (ExpiredJwtException e) {
+        expiredJwtToken = true;
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.getOutputStream().println("{ \"message\": " + e.getMessage() + "}");
         handlerExceptionResolver.resolveException(request, response, null, e);
       }
     }
-
 
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
@@ -61,7 +65,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
       }
     }
-    chain.doFilter(request, response);
+    if (!expiredJwtToken) {
+      chain.doFilter(request, response);
+    }
   }
 
 }

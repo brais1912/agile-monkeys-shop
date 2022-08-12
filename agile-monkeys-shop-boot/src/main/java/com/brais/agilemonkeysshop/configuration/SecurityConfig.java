@@ -64,6 +64,7 @@ public class SecurityConfig {
         .csrf().disable()
         .authorizeRequests()
         .antMatchers("/agile-monkeys/v1/public/**").permitAll()
+        .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
         .antMatchers("/agile-monkeys/v1/customer/**").hasAnyRole("ADMIN", "USER")
         .antMatchers("/agile-monkeys/v1/user/**").hasRole("ADMIN")
         .anyRequest().authenticated()

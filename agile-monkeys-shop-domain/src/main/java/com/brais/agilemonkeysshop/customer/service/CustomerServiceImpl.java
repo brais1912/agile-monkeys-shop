@@ -75,7 +75,9 @@ public class CustomerServiceImpl implements CustomerServicePort {
     customerPersistencePort.delete(customerId);
 
     try {
-      deleteCustomerPhoto(fullCustomerToDelete.photoUrl());
+      if (fullCustomerToDelete.photoUrl() != null && !fullCustomerToDelete.photoUrl().isEmpty()) {
+        deleteCustomerPhoto(fullCustomerToDelete.photoUrl());
+      }
     } catch (IOException e) {
       log.error(LOGGER_PREFIX + "Error when deleting the customer's photo. The client's photo could not be deleted: {}",
           e.getMessage(), e);
