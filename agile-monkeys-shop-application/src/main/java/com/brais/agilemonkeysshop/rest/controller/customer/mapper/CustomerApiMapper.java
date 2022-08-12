@@ -28,7 +28,7 @@ public interface CustomerApiMapper {
   @Mapping(target = "photo", source = "photoUrl")
   CustomerDTO toCustomerDTO(FullCustomer fullCustomer);
 
-  LiteCustomerDTO toLiteCustomerDTO(LiteCustomer fullCustomer);
+  LiteCustomerDTO toLiteCustomerDTO(LiteCustomer liteCustomer);
 
   default FullCustomer toFullCustomer(String id, String name, String surname, MultipartFile photo, String photoUrl, String createdBy,
       String updatedBy) {
