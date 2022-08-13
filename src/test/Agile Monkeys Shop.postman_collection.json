@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "9d982bce-eec5-42db-b5d2-cb22041774c8",
+		"name": "Agile Monkeys Shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Customer list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/customer/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"customer",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "name",
+									"value": "EEE",
+									"type": "default"
+								},
+								{
+									"key": "surname",
+									"value": "QQQQ",
+									"type": "default"
+								},
+								{
+									"key": "id",
+									"value": "3",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/customer/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"customer",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer fullInfo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/customer/fullInfo/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"customer",
+								"fullInfo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Efrén",
+									"type": "default"
+								},
+								{
+									"key": "surname",
+									"value": "Martínez",
+									"type": "default"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/customer/update/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"customer",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/customer/delete/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"customer",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/user/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"user",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"4\",\r\n    \"username\": \"brais1912\",\r\n    \"password\": \"aaa\",\r\n    \"name\": \"Brais\",\r\n    \"surname\": \"AA\",\r\n    \"userType\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/user/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"brais1912\",\r\n    \"password\": \"aaa\",\r\n    \"name\": \"Brais\",\r\n    \"surname\": \"BB\",\r\n    \"age\": 33,\r\n    \"userType\": \"user\",\r\n    \"userStatus\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/user/update/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"user",
+								"update",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/agile-monkeys/v1/user/delete/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"agile-monkeys",
+								"v1",
+								"user",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authenticate - Get Jwt Token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"jwtToken\", jsonData.jwtToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"agilemonkeysadmin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/agile-monkeys/v1/public/authenticate",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"agile-monkeys",
+						"v1",
+						"public",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
