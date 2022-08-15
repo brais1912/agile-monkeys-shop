@@ -69,7 +69,7 @@ class CustomerControllerTest {
   private CustomerController customerController;
 
   @Test
-  void when_callFindAll_expect_returnCustomerListResponseDTO() {
+  void when_callToFindAll_expect_returnCustomerListResponseDTO() {
     List<LiteCustomer> liteCustomerList = List.of(new LiteCustomer(CUSTOMER_ID, NAME, SURNAME));
     List<LiteCustomerDTO> customerDTOList = List.of(LITE_CUSTOMER_DTO);
     CustomerListResponseDTO expected = new CustomerListResponseDTO().customerList(customerDTOList);
@@ -84,7 +84,7 @@ class CustomerControllerTest {
   }
 
   @Test
-  void when_callGetFullInfo_expect_returnCustomerDTO() {
+  void when_callToGetFullInfo_expect_returnCustomerDTO() {
     FullCustomer fullCustomer =
         new FullCustomer(CUSTOMER_ID, NAME, SURNAME, PHOTO_FILE, PHOTO, CREATED_BY, UPDATED_BY);
 
@@ -98,7 +98,7 @@ class CustomerControllerTest {
   }
 
   @Test
-  void when_callCreate_expect_returnCreateCustomerResponseDTO() {
+  void when_callToCreate_expect_returnCreateCustomerResponseDTO() {
     FullCustomer fullCustomer =
         new FullCustomer(CUSTOMER_ID, NAME, SURNAME, PHOTO_FILE, PHOTO, CREATED_BY, CREATED_BY);
     CreateCustomerResponseDTO expected = new CreateCustomerResponseDTO().id(CUSTOMER_ID);
@@ -120,7 +120,7 @@ class CustomerControllerTest {
   }
 
   @Test
-  void when_callUpdate_expect_returnUpdateCustomerResponseDTO() {
+  void when_callToUpdate_expect_returnUpdateCustomerResponseDTO() {
     FullCustomer fullCustomer =
         new FullCustomer(CUSTOMER_ID, NAME, SURNAME, PHOTO_FILE, PHOTO, CREATED_BY, UPDATED_BY);
     UpdateCustomerResponseDTO expected = new UpdateCustomerResponseDTO().id(CUSTOMER_ID);
@@ -141,7 +141,7 @@ class CustomerControllerTest {
   }
 
   @Test
-  void when_callDelete_expect_returnDeleteCustomerResponseDTO() {
+  void when_callToDelete_expect_returnDeleteCustomerResponseDTO() {
     doNothing().when(customerServicePort).delete(CUSTOMER_ID);
 
     ResponseEntity<DeleteCustomerResponseDTO> actual = customerController.delete(CUSTOMER_ID);

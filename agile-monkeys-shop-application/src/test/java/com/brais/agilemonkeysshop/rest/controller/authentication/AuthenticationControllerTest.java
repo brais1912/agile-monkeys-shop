@@ -48,7 +48,7 @@ class AuthenticationControllerTest {
   private AuthenticationController authenticationController;
 
   @Test
-  void when_callAuthenticate_expect_returnJwtToken() {
+  void when_callToAuthenticate_expect_returnJwtToken() {
     when(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(USERNAME, PASSWORD))).thenReturn(
         new TestingAuthenticationToken(new Object(), new Object()));
     when(userSecurityService.loadUserByUsername(USERNAME)).thenReturn(USER_DETAILS);

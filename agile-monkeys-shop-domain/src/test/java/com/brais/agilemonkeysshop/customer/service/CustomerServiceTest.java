@@ -61,7 +61,7 @@ public class CustomerServiceTest {
 
     @ParameterizedTest
     @MethodSource("fromFindAllDataSet")
-    void when_callFindAll_expect_returnLiteCustomerList(List<LiteCustomer> testLiteCustomer, List<LiteCustomer> expected) {
+    void when_callToFindAll_expect_returnLiteCustomerList(List<LiteCustomer> testLiteCustomer, List<LiteCustomer> expected) {
       when(customerPersistencePort.findAll()).thenReturn(testLiteCustomer);
 
       List<LiteCustomer> actual = customerService.findAll();
@@ -82,7 +82,7 @@ public class CustomerServiceTest {
   class FindById {
 
     @Test
-    void when_callFindById_expect_returnFullCustomer() {
+    void when_callToFindById_expect_returnFullCustomer() {
       when(customerPersistencePort.findById(CUSTOMER_ID)).thenReturn(Optional.of(FULL_CUSTOMER_TEST_1));
 
       FullCustomer actual = customerService.findById(CUSTOMER_ID);
@@ -92,7 +92,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void when_callFindById_expect_customerNotFoundExceptionThrown() {
+    void when_callToFindById_expect_customerNotFoundExceptionThrown() {
       when(customerPersistencePort.findById(CUSTOMER_ID)).thenReturn(Optional.empty());
 
       assertThrows(CustomerNotFoundServiceException.class, () -> customerService.findById(CUSTOMER_ID));
@@ -105,7 +105,7 @@ public class CustomerServiceTest {
   class Create {
 
     @Test
-    void when_callCreate_expect_returnFullCustomer() {
+    void when_callToCreate_expect_returnFullCustomer() {
       when(customerPersistencePort.create(FULL_CUSTOMER_TEST_1)).thenReturn(FULL_CUSTOMER_TEST_1);
 
       FullCustomer actual = customerService.create(FULL_CUSTOMER_TEST_1);
@@ -114,7 +114,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void when_callCreate_expect_returnVoid() {
+    void when_callToCreate_expect_returnVoid() {
       when(customerPersistencePort.create(FULL_CUSTOMER_TEST_1)).thenReturn(null);
 
       FullCustomer actual = customerService.create(FULL_CUSTOMER_TEST_1);
@@ -127,7 +127,7 @@ public class CustomerServiceTest {
   class Update {
 
     @Test
-    void when_callUpdate_expect_callReturnFullCustomer() {
+    void when_callToUpdate_expect_callReturnFullCustomer() {
       when(customerPersistencePort.update(FULL_CUSTOMER_TEST_1)).thenReturn(Optional.of(FULL_CUSTOMER_TEST_1));
 
       FullCustomer actual = customerService.update(FULL_CUSTOMER_TEST_1);
@@ -137,7 +137,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void when_callCreate_expect_callReturnOptionalEmpty_customerNotFoundExceptionThrown() {
+    void when_callToCreate_expect_callReturnOptionalEmpty_customerNotFoundExceptionThrown() {
       when(customerPersistencePort.update(FULL_CUSTOMER_TEST_1)).thenReturn(Optional.empty());
 
       assertThrows(CustomerNotFoundServiceException.class, () -> customerService.update(FULL_CUSTOMER_TEST_1));
@@ -149,7 +149,7 @@ public class CustomerServiceTest {
   class Delete {
 
     @Test
-    void when_callDelete_expect_callNoExceptionThrown() {
+    void when_callToDelete_expect_callNoExceptionThrown() {
       when(customerPersistencePort.findById(CUSTOMER_ID)).thenReturn(Optional.of(FULL_CUSTOMER_TEST_1));
       doNothing().when(customerPersistencePort).delete(CUSTOMER_ID);
 
@@ -160,7 +160,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void when_callDelete_expect_callExceptionThrown() {
+    void when_callToDelete_expect_callExceptionThrown() {
       when(customerPersistencePort.findById(CUSTOMER_ID)).thenReturn(Optional.empty());
 
       assertThrows(CustomerNotFoundServiceException.class, () -> customerService.delete(CUSTOMER_ID));

@@ -43,7 +43,7 @@ class CustomerApiMapperTest {
 
   private static final LiteCustomer LITE_CUSTOMER = new LiteCustomer(CUSTOMER_ID, NAME, SURNAME);
 
-  private CustomerApiMapper customerApiMapper = new CustomerApiMapperImpl();
+  private final CustomerApiMapper customerApiMapper = new CustomerApiMapperImpl();
 
   @Test
   void when_callToCustomerDto_expect_callReturnCustomerDto() {

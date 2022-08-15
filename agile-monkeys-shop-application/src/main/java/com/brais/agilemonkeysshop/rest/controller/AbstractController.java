@@ -29,7 +29,7 @@ public abstract class AbstractController {
 
   private void validateField(String field) {
     if (field == null || field.isEmpty()) {
-      throw new ValidationException("One of the required fields is missing.");
+      throw new ValidationException("One of the required fields (id, username, password, name or surname) is missing");
     }
   }
 

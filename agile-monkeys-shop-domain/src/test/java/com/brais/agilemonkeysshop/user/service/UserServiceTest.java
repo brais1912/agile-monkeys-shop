@@ -53,7 +53,7 @@ public class UserServiceTest {
 
   private static final FullUser FULL_USER_TEST_2 = new FullUser(USER_ID, USERNAME, PASSWORD, NAME, SURNAME, AGE, null, null);
 
-  private static final LiteUser LITE_USER_TEST = new LiteUser(USER_ID, PASSWORD, USER_TYPE.getValue(), USER_STATUS.getValue());
+  private static final LiteUser LITE_USER_TEST = new LiteUser(USERNAME, PASSWORD, USER_TYPE.getValue(), USER_STATUS.getValue());
 
   @Mock
   private UserPersistencePort userPersistencePort;
@@ -66,7 +66,7 @@ public class UserServiceTest {
 
     @ParameterizedTest
     @MethodSource("fromFindAllDataSet")
-    void when_callFindAll_expect_returnFullUserList(List<FullUser> testFullUser, List<FullUser> expected) {
+    void when_callToFindAll_expect_returnFullUserList(List<FullUser> testFullUser, List<FullUser> expected) {
       when(userPersistencePort.findAll()).thenReturn(testFullUser);
 
       List<FullUser> actual = userService.findAll();
@@ -88,7 +88,7 @@ public class UserServiceTest {
   class Create {
 
     @Test
-    void when_callCreate_expect_callReturnFullUser() {
+    void when_callToCreate_expect_callReturnFullUser() {
       when(userPersistencePort.create(FULL_USER_TEST_1)).thenReturn(FULL_USER_TEST_1);
 
       FullUser actual = userService.create(FULL_USER_TEST_1);
@@ -98,7 +98,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void when_callCreate_expect_callReturnNull() {
+    void when_callToCreate_expect_callReturnNull() {
       when(userPersistencePort.create(FULL_USER_TEST_1)).thenReturn(null);
 
       FullUser actual = userService.create(FULL_USER_TEST_1);
@@ -112,7 +112,7 @@ public class UserServiceTest {
   class Update {
 
     @Test
-    void when_callUpdate_expect_callReturnFullUser() {
+    void when_callToUpdate_expect_callReturnFullUser() {
       when(userPersistencePort.update(FULL_USER_TEST_1)).thenReturn(Optional.of(FULL_USER_TEST_1));
 
       FullUser actual = userService.update(FULL_USER_TEST_1);
@@ -122,7 +122,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void when_callCreate_expect_callReturnOptionalEmpty_userNotFoundExceptionThrown() {
+    void when_callToCreate_expect_callReturnOptionalEmpty_userNotFoundExceptionThrown() {
       when(userPersistencePort.update(FULL_USER_TEST_1)).thenReturn(Optional.empty());
 
       assertThrows(UserNotFoundServiceException.class, () -> userService.update(FULL_USER_TEST_1));
@@ -134,7 +134,7 @@ public class UserServiceTest {
   class Delete {
 
     @Test
-    void when_callDelete_expect_callNoExceptionThrown() {
+    void when_callToDelete_expect_callNoExceptionThrown() {
       when(userPersistencePort.findById(USER_ID)).thenReturn(Optional.of(LITE_USER_TEST));
       doNothing().when(userPersistencePort).delete(USER_ID);
 
@@ -145,7 +145,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void when_callDelete_expect_callExceptionThrown() {
+    void when_callToDelete_expect_callExceptionThrown() {
       when(userPersistencePort.findById(USER_ID)).thenReturn(Optional.empty());
 
       assertThrows(UserNotFoundServiceException.class, () -> userService.delete(USER_ID));

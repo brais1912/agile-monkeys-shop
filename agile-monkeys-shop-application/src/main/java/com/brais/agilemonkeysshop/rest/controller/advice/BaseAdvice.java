@@ -1,5 +1,7 @@
 package com.brais.agilemonkeysshop.rest.controller.advice;
 
+import javax.validation.ValidationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,6 +41,11 @@ public class BaseAdvice extends ResponseEntityExceptionHandler {
   @ExceptionHandler({UserNotFoundServiceException.class})
   protected ResponseEntity<ErrorResponseDTO> handleCustomerServiceException(UserNotFoundServiceException e) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildErrorResponse(e.getCode(), e.getTitle(), e.getErrorMessage()));
+  }
+
+  @ExceptionHandler({ValidationException.class})
+  protected ResponseEntity<ErrorResponseDTO> handleValidationException(ValidationException e) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(buildErrorResponse("0", e.getMessage(), e.getMessage()));
   }
 
   @ExceptionHandler({ExistingUserWithSameUsernameException.class, ExistingUserWithSameIdException.class})
