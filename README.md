@@ -96,7 +96,7 @@ This command, besides deploying a container with a MongoDB image in Docker, will
 
 In addition, it will create a single admin user, whose credentials are as follows:
 * Username: admin
-* Password: agilemonkeysshop
+* Password: agilemonkeysadmin
 
 3. Finally, we will have to run our application.
 
