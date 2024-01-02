@@ -89,10 +89,15 @@ If you do not have Maven installed, run the following command:
 
 The next step is to run Docker desktop, where we will deploy the container with a MongoDB image to work with the database.
 
-To do this, located in the root of the project and using the Command prompt, execute the following command:
-* docker-compose up -d
+We have 2 options to run the service and the MongoDB. If we want to run MongoDB and the service separately, we can do the following:
 
-This command, besides deploying a container with a MongoDB image in Docker, will execute a .js script that will create the necessary collections to be able to work with this service.
+Located in the root of the project and using the Command prompt, execute the following command:
+* docker-compose up -d (this requires to run the application in a different step (Step 3))
+
+If we want to run all the services in the same container with a dedicated Network in Docker, then there is a different docker-compose file (docker-compose-dev.yml) to do so. We can do the following:
+* docker-compose -f docker-compose-dev.yml up -d (this command will create a container in Docker that contain our application + the Mongo database)
+
+These two commands will deploy a container with a MongoDB image in Docker and execute a .js script that will create the necessary collections to be able to work with this service.
 
 In addition, it will create a single admin user, whose credentials are as follows:
 * Username: admin
