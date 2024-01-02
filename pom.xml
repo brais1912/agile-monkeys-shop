@@ -20,7 +20,7 @@
 
   <groupId>com.brais</groupId>
   <artifactId>agile-monkeys-shop</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>agile-monkeys-shop</name>
   <description>Agile Monkeys shop management</description>
 

@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://api_user:NdEep0XLpMNKUmgQVa81oDCx7mrSRodh0Z79qdX3@mongodb:27017/agile-monkeys-shop
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+agile:
+  monkeys:
+    customer:
+      photo-url: .\photo\
+    security:
+      jwt-secret-key: QWdpbGUgbW9ua2V5cyBzaG9wIHNlY3JldCBrZXk=
+      jwt-token-validity: 720000

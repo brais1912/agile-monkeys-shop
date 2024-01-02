@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    environment:
+      - MONGO_INITDB_DATABASE=agile-monkeys-shop
+    ports:
+      - "27017:27017"
+    networks:
+      - my-network
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  spring-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "spring-app"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+    depends_on:
+      - mongodb
+
+networks:
+  my-network:
+    driver: bridge
