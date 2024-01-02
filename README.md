@@ -96,6 +96,7 @@ Located in the root of the project and using the Command prompt, execute the fol
 
 If we want to run all the services in the same container with a dedicated Network in Docker, then there is a different docker-compose file (docker-compose-dev.yml) to do so. We can do the following:
 * docker-compose -f docker-compose-dev.yml up -d (this command will create a container in Docker that contain our application + the Mongo database)
+  * If we would like to stop the container, similar to the previous command we would have to run the following: docker-compose -f docker-compose-dev.yml down
 
 These two commands will deploy a container with a MongoDB image in Docker and execute a .js script that will create the necessary collections to be able to work with this service.
 
